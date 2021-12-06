@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using taxi_fare_backend.Database.Model.Relationships;
 
 namespace taxi_fare_backend.Database.Model
 {
@@ -11,6 +10,6 @@ namespace taxi_fare_backend.Database.Model
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-        public ICollection<DriverVehicle> DriverVehicles { get; set; }
+        public ICollection<Vehicle> Vehicles { get; set; }
     }
 }

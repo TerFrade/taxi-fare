@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using taxi_fare_backend.Database.Model;
-using taxi_fare_backend.Database.Model.Relationships;
-
 namespace taxi_fare_backend.Database
 {
     public class TaxiDbContext : DbContext
@@ -24,13 +22,12 @@ namespace taxi_fare_backend.Database
         #endregion DbContextRegion
 
         public DbSet<Driver> Driver { get; set; }
-        public DbSet<DriverVehicle> VehicleDriver { get; set; }
         public DbSet<Vehicle> Vehicle { get; set; }
         public DbSet<Taxi> Taxi { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DriverVehicle>().HasKey(vd => new { vd.DriverId, vd.VehicleId });
+            //modelBuilder.Entity<DriverVehicle>().HasKey(vd => new { vd.DriverId, vd.VehicleId });
             modelBuilder.Entity<Vehicle>()
             .HasOne<Taxi>(t => t.Taxi)
             .WithOne(v => v.Vehicle)

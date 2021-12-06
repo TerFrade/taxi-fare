@@ -8,7 +8,7 @@ namespace taxi_fare_backend.DTO
     {
         public Guid Id { get; set; }
         public VehicleType VehicleType { get; set; }
-        public DriverVehicleDTO[] DriverVehicles { get; set; }
+        //public DriverDTO[] Drivers { get; set; }
 
         public VehicleDTO()
         {
@@ -18,8 +18,8 @@ namespace taxi_fare_backend.DTO
         {
             Id = data.Id;
             VehicleType = data.VehicleType;
-            if (data.DriverVehicles != null)
-                DriverVehicles = data.DriverVehicles.Select(x => new DriverVehicleDTO(x)).ToArray();
+            //if (data.Drivers != null)
+            //    Drivers = data.Drivers.Select(x => new DriverDTO(x)).ToArray();
         }
     }
 }
