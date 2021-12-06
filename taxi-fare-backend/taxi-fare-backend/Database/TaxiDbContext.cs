@@ -32,8 +32,9 @@ namespace taxi_fare_backend.Database
         {
             modelBuilder.Entity<DriverVehicle>().HasKey(vd => new { vd.DriverId, vd.VehicleId });
             modelBuilder.Entity<Vehicle>()
-                        .HasRequired(s => s.Address)
-                        .WithRequiredPrincipal(ad => ad.Student);
+            .HasOne<Taxi>(t => t.Taxi)
+            .WithOne(v => v.Vehicle)
+            .HasForeignKey<Taxi>(t => t.TaxiId);
         }
     }
 }
