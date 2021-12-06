@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taxi-fare-backend", "taxi-fare-backend\taxi-fare-backend.csproj", "{156F8E97-F9D0-44C9-BE76-8CC726E04BDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taxi-fare-backend", "taxi-fare-backend\taxi-fare-backend.csproj", "{A40F0A24-EC70-4031-A84C-ADFB5D18AE3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{156F8E97-F9D0-44C9-BE76-8CC726E04BDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{156F8E97-F9D0-44C9-BE76-8CC726E04BDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{156F8E97-F9D0-44C9-BE76-8CC726E04BDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{156F8E97-F9D0-44C9-BE76-8CC726E04BDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A40F0A24-EC70-4031-A84C-ADFB5D18AE3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A40F0A24-EC70-4031-A84C-ADFB5D18AE3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A40F0A24-EC70-4031-A84C-ADFB5D18AE3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A40F0A24-EC70-4031-A84C-ADFB5D18AE3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {31ED6F97-1E64-4068-B3A1-2E69820B188F}
+		SolutionGuid = {50363AFF-965E-4299-BB4A-E4112E2FC766}
 	EndGlobalSection
 EndGlobal
