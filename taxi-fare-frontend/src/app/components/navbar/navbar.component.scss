@@ -1,0 +1,11 @@
+@import "../../../styles.scss";
+
+.custom-toggler .navbar-toggler {
+  border-color: $primary;
+  box-shadow: none;
+}
+
+.dropdown-item:hover {
+  background-color: $primary;
+  color: $light;
+}
