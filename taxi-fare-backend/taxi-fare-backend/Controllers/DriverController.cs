@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using taxi_fare_backend.Database;
 using taxi_fare_backend.Database.Model;
 using taxi_fare_backend.DTO;
@@ -69,7 +69,7 @@ namespace taxi_fare_backend.Controllers
                 driver.Surname = data.Surname;
                 driver.Email = data.Email;
                 driver.VehicleId = data.VehicleId;
-                driver.Vehicle = await db.Vehicle.FirstAsync(vehicle => vehicle.Id == data.Id);
+                //driver.Vehicle = await db.Vehicle.FirstAsync(vehicle => vehicle.Id == data.Id);
                 await db.SaveChangesAsync();
 
                 return await GetDriver(driver.Id);
@@ -94,8 +94,7 @@ namespace taxi_fare_backend.Controllers
                     Surname = data.Surname,
                     Email = data.Email,
                     VehicleId = data.VehicleId,
-                    Vehicle =  await db.Vehicle.FirstAsync(vehicle => vehicle.Id == data.Id)
-                    
+                    //Vehicle =  await db.Vehicle.FirstAsync(vehicle => vehicle.Id == data.Id)
                 };
                 db.Driver.Add(driver);
                 await db.SaveChangesAsync();

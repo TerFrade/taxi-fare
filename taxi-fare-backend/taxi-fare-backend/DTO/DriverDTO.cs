@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using taxi_fare_backend.Database.Model;
 
 namespace taxi_fare_backend.DTO

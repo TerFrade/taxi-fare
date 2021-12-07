@@ -9,6 +9,7 @@ namespace taxi_fare_backend.DTO
         public Guid Id { get; set; }
         public VehicleType VehicleType { get; set; }
         public DriverDTO[] Drivers { get; set; }
+
         public VehicleDTO()
         { }
 

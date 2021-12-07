@@ -17,7 +17,7 @@ namespace taxi_fare_backend.Database
         }
 
         public TaxiDbContext() : base(ContextOptions)
-        {}
+        { }
 
         #endregion DbContextRegion
 
