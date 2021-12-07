@@ -10,8 +10,7 @@ namespace taxi_fare_backend.DTO
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-
-        public VehicleDTO[] Vehicles { get; set; }
+        public Guid VehicleId { get; set; }
 
         public DriverDTO()
         { }
@@ -22,8 +21,7 @@ namespace taxi_fare_backend.DTO
             Name = data.Name;
             Surname = data.Surname;
             Email = data.Email;
-            if (data.Vehicles != null)
-                Vehicles = data.Vehicles.Select(x => new VehicleDTO(x)).ToArray();
+            VehicleId = data.VehicleId;
         }
     }
 }

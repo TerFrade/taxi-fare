@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using taxi_fare_backend.Database;
 using taxi_fare_backend.Database.Model;
 using taxi_fare_backend.DTO;
 
 namespace taxi_fare_backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class DriverController : ControllerBase
     {
@@ -27,7 +28,7 @@ namespace taxi_fare_backend.Controllers
         {
             try
             {
-                ICollection<Driver> drivers = db.Driver.ToArray();
+                ICollection<Driver> drivers = await db.Driver.ToArrayAsync();
                 return Ok(drivers.Select(x => new DriverDTO(x)));
             }
             catch (Exception error)
@@ -43,7 +44,7 @@ namespace taxi_fare_backend.Controllers
         {
             try
             {
-                var driver =  db.Driver.FirstOrDefault(driver => driver.Id == id);
+                var driver = await db.Driver.FirstOrDefaultAsync(driver => driver.Id == id);
                 if (driver == null) { return NotFound(); }
                 return Ok(new DriverDTO(driver));
             }
@@ -60,14 +61,15 @@ namespace taxi_fare_backend.Controllers
         {
             try
             {
-                var driver =  db.Driver.FirstOrDefault(driver => driver.Id == id);
+                var driver = await db.Driver.FirstOrDefaultAsync(driver => driver.Id == id);
 
                 if (driver == null) { return NotFound(); }
 
                 driver.Name = data.Name;
                 driver.Surname = data.Surname;
                 driver.Email = data.Email;
-
+                driver.VehicleId = data.VehicleId;
+                driver.Vehicle = await db.Vehicle.FirstAsync(vehicle => vehicle.Id == data.Id);
                 await db.SaveChangesAsync();
 
                 return await GetDriver(driver.Id);
@@ -84,18 +86,16 @@ namespace taxi_fare_backend.Controllers
         {
             try
             {
-                if (db.Driver.FirstOrDefault(driver => driver.Email == data.Email) != null) { return StatusCode(409, "Driver with this email already exists!"); }
+                if (await db.Driver.FirstOrDefaultAsync(driver => driver.Email == data.Email) != null) { return StatusCode(409, "Driver with this email already exists!"); }
                 var driver = new Driver()
                 {
                     Id = Guid.NewGuid(),
                     Name = data.Name,
                     Surname = data.Surname,
                     Email = data.Email,
-                    Vehicles = data.Vehicles.Length != 0 ? data.Vehicles
-                    .Select(driver => new Vehicle()
-                    {
-                        Id = driver.Id,
-                    }).ToList() : null
+                    VehicleId = data.VehicleId,
+                    Vehicle =  await db.Vehicle.FirstAsync(vehicle => vehicle.Id == data.Id)
+                    
                 };
                 db.Driver.Add(driver);
                 await db.SaveChangesAsync();
@@ -113,7 +113,7 @@ namespace taxi_fare_backend.Controllers
         {
             try
             {
-                var driver = db.Driver.FirstOrDefault(driver => driver.Id == id);
+                var driver = await db.Driver.FirstOrDefaultAsync(driver => driver.Id == id);
                 if (driver == null) { return NotFound(); }
                 db.Driver.Remove(driver);
                 await db.SaveChangesAsync();

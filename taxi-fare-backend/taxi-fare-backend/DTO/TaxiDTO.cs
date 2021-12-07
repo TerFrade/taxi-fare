@@ -2,19 +2,17 @@
 
 namespace taxi_fare_backend.DTO
 {
-    public class TaxiDTO
+    public class TaxiDTO : VehicleDTO
     {
-        public Vehicle Vehicle { get; set; }
         public int BaseFarePrice { get; set; }
         public int BaseFareDistance { get; set; }
 
         public TaxiDTO()
-        {
-        }
+        { }
 
-        public TaxiDTO(Taxi data)
+        public TaxiDTO(Taxi data) : base(data?.Vehicle)
         {
-            Vehicle = data.Vehicle;
+            if (data == null) { return; }
             BaseFarePrice = data.BaseFarePrice;
             BaseFareDistance = data.BaseFareDistance;
         }

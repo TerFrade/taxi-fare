@@ -8,7 +8,7 @@ namespace taxi_fare_backend.Database.Model
     {
         [Key] public Guid Id { get; set; }
         public VehicleType VehicleType { get; set; }
-        public ICollection<Driver> Drivers { get; set; }
+        public virtual ICollection<Driver> Drivers { get; set; }
         public Taxi Taxi { get; set; }
     }
 

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace taxi_fare_backend.Database.Model
 {
@@ -10,6 +10,7 @@ namespace taxi_fare_backend.Database.Model
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-        public ICollection<Vehicle> Vehicles { get; set; }
+        public Guid VehicleId { get; set; }
+        [ForeignKey("VehicleId"), Required] public virtual Vehicle Vehicle { get; set; }
     }
 }
