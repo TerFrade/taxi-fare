@@ -1,7 +1,13 @@
+//Main Imports
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app-routing.module";
+import { HttpClientModule } from "@angular/common/http";
 
+//Service Imports
+import { DriverContextService } from "./services/drivercontext.service";
+
+//Components
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./components/home/home.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
@@ -17,8 +23,8 @@ import { HistoryComponent } from "./components/history/history.component";
     TransportComponent,
     HistoryComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
-  providers: [],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  providers: [DriverContextService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

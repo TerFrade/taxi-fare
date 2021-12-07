@@ -20,7 +20,7 @@ namespace taxi_fare_backend.Controllers
         {
             this.db = db;
         }
-        
+
         // GET: /vehicles
         [HttpGet]
         [Produces(typeof(VehicleDTO))]
