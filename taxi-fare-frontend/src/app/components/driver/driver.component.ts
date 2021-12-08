@@ -9,6 +9,9 @@ import { Driver } from "src/app/services/types.services";
 })
 export class DriverComponent implements OnInit {
   drivers: Driver[] = [];
+  driver: Driver = <Driver>{};
+  isEditing: boolean = false;
+
   constructor(private driverService: DriverContextService) {}
 
   ngOnInit(): void {
@@ -19,5 +22,38 @@ export class DriverComponent implements OnInit {
     this.driverService
       .getDrivers()
       .subscribe((drivers) => (this.drivers = drivers));
+  }
+
+  getDriver(id: string): void {
+    this.isEditing = true;
+    this.driverService.getDriverById(id).subscribe((result) => {
+      this.driver = <Driver>result;
+    });
+  }
+
+  saveChanges(): void {
+    if (this.isEditing) this.edit(this.driver);
+    this.add();
+  }
+
+  add(): void {
+    this.driverService
+      .addDriver(this.driver)
+      .subscribe((driver) => this.drivers.push(driver));
+    this.clear();
+  }
+
+  delete(id: string): void {
+    this.drivers = this.drivers.filter((d) => d.id !== id);
+    this.driverService.deleteDriver(id).subscribe();
+  }
+
+  clear(): void {
+    this.driver = <Driver>{};
+  }
+
+  edit(driver: Driver) {
+    console.log("editing");
+    //this.editHero = hero;
   }
 }

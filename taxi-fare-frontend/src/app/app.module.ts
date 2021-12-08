@@ -3,6 +3,8 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule } from "@angular/common/http";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
 //Service Imports
 import { DriverContextService } from "./services/drivercontext.service";
@@ -23,7 +25,13 @@ import { HistoryComponent } from "./components/history/history.component";
     TransportComponent,
     HistoryComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    CommonModule,
+    FormsModule,
+  ],
   providers: [DriverContextService],
   bootstrap: [AppComponent],
 })
