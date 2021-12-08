@@ -16,9 +16,9 @@ import { AppComponent } from "./app.component";
 import { HomeComponent } from "./components/home/home.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
 import { DriverComponent } from "./components/driver/driver.component";
-import { TransportComponent } from "./components/transport/transport.component";
 import { HistoryComponent } from "./components/history/history.component";
 import { TaxiComponent } from "./components/taxi/taxi.component";
+import { CalculateFareComponent } from "./components/calculate-fare/calculate-fare.component";
 
 @NgModule({
   declarations: [
@@ -26,9 +26,9 @@ import { TaxiComponent } from "./components/taxi/taxi.component";
     NavbarComponent,
     HomeComponent,
     DriverComponent,
-    TransportComponent,
     HistoryComponent,
     TaxiComponent,
+    CalculateFareComponent,
   ],
   imports: [
     BrowserModule,

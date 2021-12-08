@@ -12,14 +12,15 @@
     </button>
   </div>
   <div class="row mt-4">
-    <div class="col-sm-4 mb-4" *ngFor="let taxi of taxis">
+    <div class="col-sm-4 mb-4" *ngFor="let taxi of taxis; let i = index">
       <div class="card">
         <div class="card-body text-dark">
-          <h5 class="card-title">{{ VehicleType[taxi.vehicleType] }}</h5>
+          <h5 class="card-title">
+            {{ VehicleType[taxi.vehicleType] }} {{ i + 1 }}
+          </h5>
           <p class="card-text" *ngIf="taxi.driver == null">No drivers yet</p>
-          <div class="card-text d-flex" *ngIf="taxi.driver != null">
-            Driven by:
-            <p>{{ taxi.driver.name }} {{ taxi.driver.surname }}</p>
+          <div class="card-text" *ngIf="taxi.driver != null">
+            <p>Driven by: {{ taxi.driver.name }} {{ taxi.driver.surname }}</p>
           </div>
           <div>
             <button
