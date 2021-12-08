@@ -7,7 +7,6 @@ and plans to expand this service to include bus and train fares in the future. F
 1. Create a Web application that allows you to register, delete and update taxi driver profiles
 
 The taxi drive profile consists of the following information.
-
 1. Name
 2. Surname
 3. Email
