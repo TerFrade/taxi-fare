@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using taxi_fare_backend.Data.Model;
 using taxi_fare_backend.Database.Model;
 
 namespace taxi_fare_backend.Database
@@ -23,5 +24,6 @@ namespace taxi_fare_backend.Database
 
         public DbSet<Driver> Driver { get; set; }
         public DbSet<Vehicle> Vehicle { get; set; }
+        public DbSet<Taxi> Taxi { get; set; }
     }
 }

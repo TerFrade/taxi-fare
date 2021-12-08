@@ -12,6 +12,11 @@ export interface Vehicle {
   drivers: Driver[];
 }
 
+export interface Taxi extends Vehicle {
+  baseFarePrice: number;
+  baseFareDistance: number;
+}
+
 export enum VehicleType {
   Taxi,
   Bus,

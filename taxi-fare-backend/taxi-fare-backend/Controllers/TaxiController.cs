@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using taxi_fare_backend.Data.Model;
 using taxi_fare_backend.Database;
 using taxi_fare_backend.Database.Model;
 using taxi_fare_backend.DTO;
@@ -12,24 +13,24 @@ namespace taxi_fare_backend.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class VehicleController : ControllerBase
+    public class TaxiController : ControllerBase
     {
         private readonly TaxiDbContext db;
 
-        public VehicleController(TaxiDbContext db)
+        public TaxiController(TaxiDbContext db)
         {
             this.db = db;
         }
 
         // GET: /vehicles
         [HttpGet]
-        [Produces(typeof(VehicleDTO))]
-        public async Task<IActionResult> GetVehicle()
+        [Produces(typeof(TaxiDTO))]
+        public async Task<IActionResult> GetTaxi()
         {
             try
             {
-                ICollection<Vehicle> vehicles = await db.Vehicle.Include(x => x.Drivers).ToArrayAsync();
-                return Ok(vehicles.Select(x => new VehicleDTO(x)));
+                ICollection<Taxi> taxis = await db.Taxi.Include(x => x.Vehicle).ToArrayAsync();
+                return Ok(taxis.Select(x => new TaxiDTO(x)));
             }
             catch (Exception error)
             {
@@ -39,14 +40,14 @@ namespace taxi_fare_backend.Controllers
 
         // GET: /vehicles/[Guid]
         [HttpGet("{id}")]
-        [Produces(typeof(VehicleDTO))]
-        public async Task<IActionResult> GetVehicle(Guid id)
+        [Produces(typeof(TaxiDTO))]
+        public async Task<IActionResult> GetTaxi(Guid id)
         {
             try
             {
-                var vehicle = await db.Vehicle.Include(x => x.Drivers).FirstOrDefaultAsync(vehicle => vehicle.Id == id);
-                if (vehicle == null) { return NotFound(); }
-                return Ok(new VehicleDTO(vehicle));
+                var taxi = await db.Taxi.Include(x => x.Vehicle).FirstOrDefaultAsync(taxi => taxi.VehicleId == id);
+                if (taxi == null) { return NotFound(); }
+                return Ok(new TaxiDTO(taxi));
             }
             catch (Exception error)
             {
@@ -56,18 +57,21 @@ namespace taxi_fare_backend.Controllers
 
         // PUT: /vehicles/[Guid]
         [HttpPut("{id}")]
-        [Produces(typeof(VehicleDTO))]
-        public async Task<IActionResult> Put(Guid id, [FromBody] VehicleDTO data)
+        [Produces(typeof(TaxiDTO))]
+        public async Task<IActionResult> Put(Guid id, [FromBody] TaxiDTO data)
         {
             try
             {
-                var vehicle = await db.Vehicle.FirstOrDefaultAsync(vehicle => vehicle.Id == id);
+                var taxi = await db.Taxi.FirstOrDefaultAsync(taxi => taxi.VehicleId == id);
 
-                if (vehicle == null) { return NotFound(); }
-                vehicle.VehicleType = data.VehicleType;
+                if (taxi == null) { return NotFound(); }
+
+                taxi.BaseFarePrice = data.BaseFarePrice;
+                taxi.BaseFareDistance = data.BaseFareDistance;
+
                 await db.SaveChangesAsync();
 
-                return await GetVehicle(vehicle.Id);
+                return await GetTaxi(taxi.VehicleId);
             }
             catch (Exception error)
             {
@@ -76,26 +80,29 @@ namespace taxi_fare_backend.Controllers
         }
 
         [HttpPost]
-        [Produces(typeof(VehicleDTO))]
-        public async Task<IActionResult> Post([FromBody] VehicleDTO data)
+        [Produces(typeof(TaxiDTO))]
+        public async Task<IActionResult> Post([FromBody] TaxiDTO data)
         {
             try
             {
-                var vehicle = new Vehicle()
+                Guid id = Guid.NewGuid();
+                var taxi = new Taxi()
                 {
-                    Id = Guid.NewGuid(),
-                    VehicleType = data.VehicleType,
-                    Drivers = data.Drivers.Length != 0 ? data.Drivers.Select(x => new Driver()
+                    VehicleId = id,
+                    BaseFarePrice = data.BaseFarePrice,
+                    BaseFareDistance = data.BaseFareDistance,
+                    Vehicle = new Vehicle() { Id = id, VehicleType = VehicleType.Taxi, Drivers = data.Drivers.Length != 0 ? data.Drivers.Select(x => new Driver()
                     {
                         Name = x.Name,
                         Surname = x.Surname,
                         Email = x.Email,
                     }).ToList() : null
+                    }
                 };
 
-                db.Vehicle.Add(vehicle);
+                db.Taxi.Add(taxi);
                 await db.SaveChangesAsync();
-                return await GetVehicle(vehicle.Id);
+                return await GetTaxi(id);
             }
             catch (Exception error)
             {
@@ -104,16 +111,16 @@ namespace taxi_fare_backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Produces(typeof(VehicleDTO))]
+        [Produces(typeof(TaxiDTO))]
         public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
-                var vehicle = await db.Vehicle.FirstOrDefaultAsync(vehicle => vehicle.Id == id);
-                if (vehicle == null) { return NotFound(); }
-                db.Vehicle.Remove(vehicle);
+                var taxi = await db.Taxi.FirstOrDefaultAsync(taxi => taxi.VehicleId == id);
+                if (taxi == null) { return NotFound(); }
+                db.Taxi.Remove(taxi);
                 await db.SaveChangesAsync();
-                return Ok(new VehicleDTO(vehicle));
+                return Ok(new TaxiDTO(taxi));
             }
             catch (Exception error)
             {

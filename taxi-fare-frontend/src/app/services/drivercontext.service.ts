@@ -36,11 +36,6 @@ export class DriverContextService {
   }
 
   updateDriver(driver: Driver): Observable<Driver> {
-    httpOptions.headers = httpOptions.headers.set(
-      "Authorization",
-      "my-new-auth-token"
-    );
-
-    return this.http.put<Driver>(this.API_URL, driver, httpOptions);
+    return this.http.put<Driver>(this.API_URL + `/${driver.id}`, driver);
   }
 }

@@ -32,8 +32,7 @@ export class DriverComponent implements OnInit {
   }
 
   saveChanges(): void {
-    if (this.isEditing) this.edit(this.driver);
-    this.add();
+    this.isEditing ? this.edit() : this.add();
   }
 
   add(): void {
@@ -52,8 +51,9 @@ export class DriverComponent implements OnInit {
     this.driver = <Driver>{};
   }
 
-  edit(driver: Driver) {
-    console.log("editing");
-    //this.editHero = hero;
+  edit() {
+    this.driverService
+      .updateDriver(this.driver)
+      .subscribe((driver) => this.getDrivers());
   }
 }
