@@ -1,0 +1,113 @@
+<div>
+  <div class="d-flex align-items-center">
+    <h1>List of Vehicles</h1>
+    <button
+      type="button"
+      class="btn btn-primary ms-4"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+      (click)="isEditing = false"
+    >
+      Add Vehicle
+    </button>
+  </div>
+  <div class="row mt-4">
+    <div class="col-sm-4 mb-4" *ngFor="let vehicle of vehicles">
+      <div class="card">
+        <div class="card-body text-dark">
+          <h5 class="card-title">{{ VehicleType[vehicle.vehicleType] }}</h5>
+          <p class="card-text">
+            Driven by:
+            <span *ngFor="let driver of vehicle.drivers"
+              >{{ driver.name }} {{ driver.surname }}</span
+            >
+          </p>
+          <div>
+            <button
+              class="btn btn-warning me-2"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              (click)="getDriver(vehicle.id)"
+            >
+              Edit
+            </button>
+            <button class="btn btn-danger" (click)="delete(vehicle.id)">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h5 *ngIf="vehicles.length == 0">There are no vehicles, please add some.</h5>
+</div>
+
+<!-- Modal -->
+<!-- <div
+  class="modal fade text-dark"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="clear()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-3">
+          <span class="input-group-text w-25" id="inputGroup-sizing-default"
+            >Name</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default"
+            [(ngModel)]="driver.name"
+            name="name"
+          />
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text w-25" id="inputGroup-sizing-default"
+            >Surname</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default"
+            [(ngModel)]="driver.surname"
+            name="surname"
+          />
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text w-25" id="inputGroup-sizing-default"
+            >Email</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default"
+            [(ngModel)]="driver.email"
+            name="email"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="saveChanges()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div> -->

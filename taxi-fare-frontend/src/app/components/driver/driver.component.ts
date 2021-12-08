@@ -54,6 +54,6 @@ export class DriverComponent implements OnInit {
   edit() {
     this.driverService
       .updateDriver(this.driver)
-      .subscribe((driver) => this.getDrivers());
+      .subscribe(() => this.getDrivers());
   }
 }

@@ -85,7 +85,8 @@ namespace taxi_fare_backend.Controllers
                 {
                     Id = Guid.NewGuid(),
                     VehicleType = data.VehicleType,
-                    Drivers = data.Drivers.Length != 0 ? data.Drivers.Select(x => new Driver()
+                    Drivers = data.Drivers.Length != 0 ? data.Drivers.Select(x => 
+                    new Driver()
                     {
                         Name = x.Name,
                         Surname = x.Surname,

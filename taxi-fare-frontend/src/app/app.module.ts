@@ -8,6 +8,7 @@ import { FormsModule } from "@angular/forms";
 
 //Service Imports
 import { DriverContextService } from "./services/drivercontext.service";
+import { VehicleContextService } from "./services/vehiclecontext.service";
 
 //Components
 import { AppComponent } from "./app.component";
@@ -32,7 +33,7 @@ import { HistoryComponent } from "./components/history/history.component";
     CommonModule,
     FormsModule,
   ],
-  providers: [DriverContextService],
+  providers: [DriverContextService, VehicleContextService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
