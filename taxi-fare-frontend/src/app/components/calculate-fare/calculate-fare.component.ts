@@ -41,6 +41,7 @@ export class CalculateFareComponent implements OnInit {
   }
 
   taxiFare(): void {
+    this.taxisWithPrice = [];
     this.taxiService.getTaxi().subscribe((results) => {
       this.taxis = results.filter((t) => t.driver !== null);
       this.taxis.forEach((taxi) => {
@@ -50,8 +51,9 @@ export class CalculateFareComponent implements OnInit {
           const distanceTravled: number =
             this.fareInfo[0] - taxi.baseFareDistance;
           const unitsTraveled: number = distanceTravled / this.fareInfo[1];
-          const price: number =
-            this.fareInfo[0] + unitsTraveled * this.fareInfo[2];
+          const price: number = Math.round(
+            this.fareInfo[0] + unitsTraveled * this.fareInfo[2]
+          );
           this.taxisWithPrice.push([taxi, price]);
         }
       });
