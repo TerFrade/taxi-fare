@@ -116,7 +116,7 @@ namespace taxi_fare_backend.Controllers
         {
             try
             {
-                var taxi = await db.Taxi.FirstOrDefaultAsync(taxi => taxi.VehicleId == id);
+                var taxi = await db.Taxi.Include(x => x.Vehicle).FirstOrDefaultAsync(taxi => taxi.VehicleId == id);
                 if (taxi == null) { return NotFound(); }
                 db.Taxi.Remove(taxi);
                 await db.SaveChangesAsync();

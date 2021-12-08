@@ -1,9 +1,17 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
+import { HttpHeaders } from "@angular/common/http";
 
 import { Observable } from "rxjs";
 
 import { Driver } from "./types.services";
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    "Content-Type": "application/json",
+    Authorization: "my-auth-token",
+  }),
+};
 
 @Injectable()
 export class DriverContextService {
@@ -20,12 +28,12 @@ export class DriverContextService {
   }
 
   addDriver(driver: Driver): Observable<Driver> {
-    return this.http.post<Driver>(this.API_URL, driver);
+    return this.http.post<Driver>(this.API_URL, driver, httpOptions);
   }
 
   deleteDriver(id: string): Observable<unknown> {
     const url = `${this.API_URL}/${id}`;
-    return this.http.delete(url);
+    return this.http.delete(url, httpOptions);
   }
 
   updateDriver(driver: Driver): Observable<Driver> {

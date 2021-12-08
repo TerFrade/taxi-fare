@@ -9,7 +9,7 @@ namespace taxi_fare_backend.DTO
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-        public Guid VehicleId { get; set; }
+        public Guid? VehicleId { get; set; }
 
         public DriverDTO()
         { }

@@ -9,6 +9,7 @@ import { FormsModule } from "@angular/forms";
 //Service Imports
 import { DriverContextService } from "./services/drivercontext.service";
 import { VehicleContextService } from "./services/vehiclecontext.service";
+import { TaxiContextService } from "./services/taxicontext.service";
 
 //Components
 import { AppComponent } from "./app.component";
@@ -17,6 +18,8 @@ import { NavbarComponent } from "./components/navbar/navbar.component";
 import { DriverComponent } from "./components/driver/driver.component";
 import { TransportComponent } from "./components/transport/transport.component";
 import { HistoryComponent } from "./components/history/history.component";
+import { TaxiComponent } from "./components/taxi/taxi.component";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +28,7 @@ import { HistoryComponent } from "./components/history/history.component";
     DriverComponent,
     TransportComponent,
     HistoryComponent,
+    TaxiComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +37,7 @@ import { HistoryComponent } from "./components/history/history.component";
     CommonModule,
     FormsModule,
   ],
-  providers: [DriverContextService, VehicleContextService],
+  providers: [DriverContextService, VehicleContextService, TaxiContextService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

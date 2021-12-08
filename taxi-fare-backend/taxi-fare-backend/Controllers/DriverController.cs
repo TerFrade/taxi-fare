@@ -69,7 +69,7 @@ namespace taxi_fare_backend.Controllers
                 driver.Surname = data.Surname;
                 driver.Email = data.Email;
                 driver.VehicleId = data.VehicleId;
-                driver.Vehicle = await db.Vehicle.FirstAsync(vehicle => vehicle.Id == data.VehicleId);
+                //driver.Vehicle = await db.Vehicle.FirstAsync(vehicle => vehicle.Id == data.VehicleId);
                 await db.SaveChangesAsync();
 
                 return await GetDriver(driver.Id);
@@ -94,7 +94,6 @@ namespace taxi_fare_backend.Controllers
                     Surname = data.Surname,
                     Email = data.Email,
                     VehicleId = data.VehicleId,
-                    Vehicle =  await db.Vehicle.FirstAsync(vehicle => vehicle.Id == data.VehicleId)
                 };
                 db.Driver.Add(driver);
                 await db.SaveChangesAsync();
