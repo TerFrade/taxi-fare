@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using taxi_fare_backend.Database.Model;
 
 namespace taxi_fare_backend.DTO
@@ -8,7 +7,8 @@ namespace taxi_fare_backend.DTO
     {
         public Guid Id { get; set; }
         public VehicleType VehicleType { get; set; }
-        public DriverDTO[] Drivers { get; set; }
+        public DriverDTO Driver { get; set; }
+
         public VehicleDTO()
         { }
 
@@ -16,8 +16,8 @@ namespace taxi_fare_backend.DTO
         {
             Id = data.Id;
             VehicleType = data.VehicleType;
-            if (data.Drivers != null)
-                Drivers = data.Drivers.Select(x => new DriverDTO(x)).ToArray();
+            if (data.Driver != null)
+                Driver = new DriverDTO(data.Driver);
         }
     }
 }

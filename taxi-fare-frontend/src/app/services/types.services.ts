@@ -9,7 +9,7 @@ export interface Driver {
 export interface Vehicle {
   id: string;
   vehicleType: VehicleType;
-  drivers: Driver[];
+  driver: Driver;
 }
 
 export interface Taxi extends Vehicle {

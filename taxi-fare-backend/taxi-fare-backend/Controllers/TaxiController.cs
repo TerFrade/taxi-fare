@@ -22,14 +22,14 @@ namespace taxi_fare_backend.Controllers
             this.db = db;
         }
 
-        // GET: /vehicles
+        // GET: /Taxi
         [HttpGet]
         [Produces(typeof(TaxiDTO))]
         public async Task<IActionResult> GetTaxi()
         {
             try
             {
-                ICollection<Taxi> taxis = await db.Taxi.Include(x => x.Vehicle).ToArrayAsync();
+                ICollection<Taxi> taxis = await db.Taxi.Include(x => x.Vehicle).Include(x => x.Vehicle.Driver).ToArrayAsync();
                 return Ok(taxis.Select(x => new TaxiDTO(x)));
             }
             catch (Exception error)
@@ -38,14 +38,14 @@ namespace taxi_fare_backend.Controllers
             }
         }
 
-        // GET: /vehicles/[Guid]
+        // GET: /Taxi/[Guid]
         [HttpGet("{id}")]
         [Produces(typeof(TaxiDTO))]
         public async Task<IActionResult> GetTaxi(Guid id)
         {
             try
             {
-                var taxi = await db.Taxi.Include(x => x.Vehicle).FirstOrDefaultAsync(taxi => taxi.VehicleId == id);
+                var taxi = await db.Taxi.Include(x => x.Vehicle).Include(x => x.Vehicle.Driver).FirstOrDefaultAsync(taxi => taxi.VehicleId == id);
                 if (taxi == null) { return NotFound(); }
                 return Ok(new TaxiDTO(taxi));
             }
@@ -55,19 +55,20 @@ namespace taxi_fare_backend.Controllers
             }
         }
 
-        // PUT: /vehicles/[Guid]
+        // PUT: /Taxi/[Guid]
         [HttpPut("{id}")]
         [Produces(typeof(TaxiDTO))]
         public async Task<IActionResult> Put(Guid id, [FromBody] TaxiDTO data)
         {
             try
             {
-                var taxi = await db.Taxi.FirstOrDefaultAsync(taxi => taxi.VehicleId == id);
+                var taxi = await db.Taxi.Include(x => x.Vehicle).ThenInclude(x => x.Driver).FirstOrDefaultAsync(taxi => taxi.VehicleId == id);
 
                 if (taxi == null) { return NotFound(); }
 
                 taxi.BaseFarePrice = data.BaseFarePrice;
                 taxi.BaseFareDistance = data.BaseFareDistance;
+                taxi.Vehicle.Driver = data.Driver != null ? await db.Driver.FirstOrDefaultAsync(driver => driver.Id == data.Driver.Id) : null;
 
                 await db.SaveChangesAsync();
 
@@ -91,12 +92,11 @@ namespace taxi_fare_backend.Controllers
                     VehicleId = id,
                     BaseFarePrice = data.BaseFarePrice,
                     BaseFareDistance = data.BaseFareDistance,
-                    Vehicle = new Vehicle() { Id = id, VehicleType = VehicleType.Taxi, Drivers = data.Drivers.Length != 0 ? data.Drivers.Select(x => new Driver()
+                    Vehicle = new Vehicle()
                     {
-                        Name = x.Name,
-                        Surname = x.Surname,
-                        Email = x.Email,
-                    }).ToList() : null
+                        Id = id,
+                        VehicleType = VehicleType.Taxi,
+                        Driver = data.Driver != null ? await db.Driver.FirstAsync(driver => driver.Id == data.Driver.Id) : null
                     }
                 };
 

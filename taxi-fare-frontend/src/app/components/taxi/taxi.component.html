@@ -16,13 +16,11 @@
       <div class="card">
         <div class="card-body text-dark">
           <h5 class="card-title">{{ VehicleType[taxi.vehicleType] }}</h5>
-          <p class="card-text" *ngIf="taxi.drivers == null">No drivers yet</p>
-          <p class="card-text" *ngIf="taxi.drivers != null">
+          <p class="card-text" *ngIf="taxi.driver == null">No drivers yet</p>
+          <div class="card-text d-flex" *ngIf="taxi.driver != null">
             Driven by:
-            <span *ngFor="let driver of taxi.drivers">
-              <p>{{ driver.name }} {{ driver.surname }}</p>
-            </span>
-          </p>
+            <p>{{ taxi.driver.name }} {{ taxi.driver.surname }}</p>
+          </div>
           <div>
             <button
               class="btn btn-warning me-2"
@@ -89,6 +87,23 @@
             [(ngModel)]="taxi.baseFareDistance"
             name="baseFareDistance"
           />
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text w-50" id="inputGroup-sizing-default"
+            >Driver</span
+          >
+          <select
+            class="form-select"
+            aria-label="Default select example"
+            aria-describedby="inputGroup-sizing-default"
+            [(ngModel)]="taxi.driver"
+            name="taxiDriver"
+          >
+            <option [ngValue]="null">No Driver</option>
+            <option *ngFor="let driver of drivers" [ngValue]="driver">
+              {{ driver.name }} {{ driver.surname }}
+            </option>
+          </select>
         </div>
       </div>
       <div class="modal-footer">

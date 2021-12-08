@@ -11,6 +11,6 @@ namespace taxi_fare_backend.Database.Model
         public string Surname { get; set; }
         public string Email { get; set; }
         public Guid? VehicleId { get; set; }
-        [ForeignKey("VehicleId"), Required] public virtual Vehicle Vehicle { get; set; }
+        [ForeignKey("VehicleId")] public virtual Vehicle Vehicle { get; set; }
     }
 }

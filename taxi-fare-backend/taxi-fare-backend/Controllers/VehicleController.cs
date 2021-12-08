@@ -28,7 +28,7 @@ namespace taxi_fare_backend.Controllers
         {
             try
             {
-                ICollection<Vehicle> vehicles = await db.Vehicle.Include(x => x.Drivers).ToArrayAsync();
+                ICollection<Vehicle> vehicles = await db.Vehicle.Include(x => x.Driver).ToArrayAsync();
                 return Ok(vehicles.Select(x => new VehicleDTO(x)));
             }
             catch (Exception error)
@@ -44,7 +44,7 @@ namespace taxi_fare_backend.Controllers
         {
             try
             {
-                var vehicle = await db.Vehicle.Include(x => x.Drivers).FirstOrDefaultAsync(vehicle => vehicle.Id == id);
+                var vehicle = await db.Vehicle.Include(x => x.Driver).FirstOrDefaultAsync(vehicle => vehicle.Id == id);
                 if (vehicle == null) { return NotFound(); }
                 return Ok(new VehicleDTO(vehicle));
             }
@@ -85,13 +85,12 @@ namespace taxi_fare_backend.Controllers
                 {
                     Id = Guid.NewGuid(),
                     VehicleType = data.VehicleType,
-                    Drivers = data.Drivers.Length != 0 ? data.Drivers.Select(x => 
-                    new Driver()
+                    Driver = data.Driver != null ? new Driver()
                     {
-                        Name = x.Name,
-                        Surname = x.Surname,
-                        Email = x.Email,
-                    }).ToList() : null
+                        Name = data.Driver.Name,
+                        Surname = data.Driver.Surname,
+                        Email = data.Driver.Email,
+                    } : null
                 };
 
                 db.Vehicle.Add(vehicle);

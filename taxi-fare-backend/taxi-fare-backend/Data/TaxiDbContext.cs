@@ -25,5 +25,13 @@ namespace taxi_fare_backend.Database
         public DbSet<Driver> Driver { get; set; }
         public DbSet<Vehicle> Vehicle { get; set; }
         public DbSet<Taxi> Taxi { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Vehicle>()
+                .HasOne(v => v.Driver)
+                .WithOne(d => d.Vehicle)
+                .HasForeignKey<Driver>(v => v.VehicleId);
+        }
     }
 }
